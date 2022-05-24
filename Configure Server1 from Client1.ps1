@@ -3,7 +3,7 @@
     Rename-Computer -NewName Client1
     Restart-Computer
 
-    Add-computer -DomainName cne270.pri -Credential (Get-Credential -Message "Enter Username and Password of Domain Administrator Account")
+    Add-computer -DomainName Changeme!.pri -Credential (Get-Credential -Message "Enter Username and Password of Domain Administrator Account") #Changes needed
     Restart-Computer
 #endregion
 
@@ -76,11 +76,11 @@ $cred = Get-Credential -Message "Enter Username and Password of the Server1 Admi
 Invoke-Command `
 -ComputerName 192.168.12.4 `
 -Credential $cred `
--scriptblock {Add-Computer -DomainName cne270.pri -Credential $using:cred -Restart}
+-scriptblock {Add-Computer -DomainName Changeme!.pri -Credential $using:cred -Restart}   #Changes needed 
  
 
 #Verify that Server1 has been added in to the domain. The -Credential parameter may be omitted if
 #you are already logged into this (Client1) machine as the cne270 domain administrator.
 #If the following command is not recognized, you probably failed to install RSAT Active Directory Domain 
 #Services and Lightweight Directory Services Tools at the start of this lab.
-Get-ADComputer -Credential (Get-Credential "cne270\Administrator") -Filter * | Format-Table
+Get-ADComputer -Credential (Get-Credential "Changeme!\Administrator") -Filter * | Format-Table #Changes needed
