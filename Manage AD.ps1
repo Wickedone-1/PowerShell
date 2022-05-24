@@ -8,9 +8,9 @@
 
     #Promote to a Domain Controller
     Install-ADDSDomainController `
-        -Credential (Get-Credential "cne270\Administrator" -Message 'Enter Domain Administrator Credentials') `
+        -Credential (Get-Credential "Changeme!\Administrator" -Message 'Enter Domain Administrator Credentials') `  #Changes needed
         -InstallDns:$True `
-        -DomainName 'cne270.pri' `
+        -DomainName 'Changeme!.pri' `                         #Changes needed
         -DatabasePath 'C:\Windows\NTDS' `
         -LogPath 'C:\Windows\NTDS' `
         -SysvolPath 'C:\Windows\SYSVOL' `
@@ -21,7 +21,7 @@
     Exit-PSSession
     
     #Check that Server1 is one of the Domain Controllers in the Domain
-    Get-DnsServerResourceRecord -ComputerName Server1 -ZoneName cne270.pri -RRType NS
+    Get-DnsServerResourceRecord -ComputerName Server1 -ZoneName changeme!.pri -RRType NS                #changes needed
     Get-ADDomainController -Filter * -Server Server1 |
         Format-Table Name,ComputerObjectDN,IsGlobalCatalog
 #endregion 1
@@ -32,7 +32,7 @@
     
     Get-ADObject -Filter {ObjectClass -eq "OrganizationalUnit"}
     
-    Get-ADObject -SearchBase 'OU=MyCompany,DC=cne270,DC=pri' `
+    Get-ADObject -SearchBase 'OU=MyCompany,DC=changeme!,DC=pri' `                           #Changes needed
         -Filter {ObjectClass -eq "OrganizationalUnit"}|
         Format-Table Name,DistinguishedName -AutoSize
     
@@ -46,7 +46,7 @@
     
     #Find specific user objects
     Get-ADObject `
-        -Identity 'CN=JamaG,OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri' `
+        -Identity 'CN=JamaG,OU=Users,OU=Puyallup,OU=MyCompany,DC=changeme!,DC=pri' `                  #Changes needed
         -Properties * | FL
 
     Get-ADObject -Filter {SamAccountName -eq 'mbadmin'} -Properties * | FL
@@ -54,15 +54,15 @@
     #Add OU for Users and Computer under the Seattle OU
     New-ADOrganizationalUnit `
         -Name Users `
-        -Path 'OU=Seattle,OU=MyCompany,DC=cne270,DC=pri' `
+        -Path 'OU=Seattle,OU=MyCompany,DC=changeme!,DC=pri' `                                    #Changes needed
         -Verbose
     
     New-ADOrganizationalUnit `
         -Name Computers `
-        -Path 'OU=Seattle,OU=MyCompany,DC=cne270,DC=pri' `
+        -Path 'OU=Seattle,OU=MyCompany,DC=changeme!,DC=pri' `                               #Changes needed!
         -Verbose
     
-    Get-ADObject -SearchBase 'OU=MyCompany,DC=cne270,DC=pri' `
+    Get-ADObject -SearchBase 'OU=MyCompany,DC=changeme!,DC=pri' `                               #Changes needed
         -Filter {ObjectClass -eq "OrganizationalUnit"}
 #endregion 2
 
@@ -73,7 +73,7 @@ Get-ADUser -Filter * -Properties *| gm
 
 Get-ADUser -Filter * -Properties *| fl Name,DistinguishedName,City
 
-Get-ADUser -Filter * -SearchBase 'OU=MyCompany,DC=cne270,DC=pri'|
+Get-ADUser -Filter * -SearchBase 'OU=MyCompany,DC=changeme!,DC=pri'|                              #changes needed
      ft Name,DistinguishedName -AutoSize
 
 Get-ADUser -Filter {Name -like '*jama*'}  -Properties * |
@@ -94,13 +94,13 @@ notepad C:\Text\PuyallupItUsers.csv
 $SetPass = Read-Host -Prompt "Enter password for New Account:" -AsSecureString
 New-ADUser `
 	-Server DC1 `
-	-Path 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri' `
+	-Path 'OU=Users,OU=Puyallup,OU=MyCompany,DC=changeme!,DC=pri' `                              #Changes needed
 	-department IT `
 	-SamAccountName MaryB `
 	-Name MaryB `
 	-Surname Bedel `
 	-GivenName Mary `
-	-UserPrincipalName MaryB@cne270.pri `
+	-UserPrincipalName MaryB@changeme!.pri `                                        #Changes needed
 	-City Puyallup `
 	-AccountPassword $setpass `
 	-ChangePasswordAtLogon $True `
@@ -118,13 +118,13 @@ Get-ADUser -Identity 'MaryB' -Properties *| FL Name,Description,Title,Enabled
 #check users before changing the state to "WA"
 Get-ADUser  `
     -filter { -not( State -like '*') } `
-    -SearchBase 'OU=MyCompany,DC=cne270,DC=pri' -SearchScope Subtree -Properties *|
+    -SearchBase 'OU=MyCompany,DC=Changeme!,DC=pri' -SearchScope Subtree -Properties *|                          #Changes needed
     Format-Table Name,SamAccountName,State
 
 #change the state 
 Get-ADUser  `
     -filter { -not( State -like '*') } `
-    -SearchBase 'OU=MyCompany,DC=cne270,DC=pri' -SearchScope Subtree|
+    -SearchBase 'OU=MyCompany,DC=changeme!,DC=pri' -SearchScope Subtree|                       #Changes needed
     Set-ADUser -State 'WA' -Verbose
 
 #check users after changing the state to "WA" 
@@ -133,15 +133,15 @@ Get-ADUser -Filter {State -eq 'WA'} -Properties *|
 
 #Find users whose accounts are disabled, then enable them
     Get-ADUser -Filter {Enabled -eq $false} `
-        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri'|
+        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=changeme!,DC=pri'|                    #Changes needed
         ft Name,SamAccountName,Enabled -AutoSize
 
     Get-ADUser -Filter {enabled -eq $false} `
-        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri'|
+        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=changeme!,DC=pri'|                     #Changes needed
         Set-ADUser -Enabled $true
 
     Get-ADUser -Filter * `
-        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri'|
+        -SearchBase 'OU=Users,OU=Puyallup,OU=MyCompany,DC=changeme!,DC=pri'|                     #changes needed
         ft Name,SamAccountName,Enabled -AutoSize
 
 #Determine status of LockedOut Account (there are no locked accounts in our case!)
@@ -174,7 +174,7 @@ Set-ADComputer -Identity 'Server1' -Description 'This is a Server for App/Dev Te
 
 #Move computer to OU
 Get-ADComputer -Identity Server1 |
-    Move-ADObject -TargetPath 'OU=Computers,OU=Seattle,OU=MyCompany,DC=cne270,DC=pri'
+    Move-ADObject -TargetPath 'OU=Computers,OU=Seattle,OU=MyCompany,DC=Changeme!,DC=pri'                #Changes needed!
 
 Get-ADComputer -Identity Server1 -Properties * | FT Name,DistinguishedName
 #endregion 4
