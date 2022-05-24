@@ -1,0 +1,13 @@
+DistinguishedName,Department,SamAccountName,Name,GivenName,Surname,UserPrincipalName,City,Enabled,ChangePasswordAtLogon
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",Operations,BertramT,BertramT,Bertram,Tuft,BertramT@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",IT,LuettaM,LuettaM,Luetta,Maliszewski,LuettaM@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",Development,FloridaB,FloridaB,Florida,Banerjee,FloridaB@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",Operations,ClarkA,ClarkA,Clark,Arend,ClarkA@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",Operations,JamaG,JamaG,Jama,Galvan,JamaG@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",IT,ReynaldaB,ReynaldaB,Reynalda,Brower,ReynaldaB@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",HR,EldenM,EldenM,Elden,McAllister,EldenM@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",Development,SheliaM,SheliaM,Shelia,McGrath,SheliaM@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",HR,HaJ,HaJ,Ha,Joerling,HaJ@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",IT,MiG,MiG,Mi,Godines,MiG@Changeme!.pri,Puyallup,$False,$True
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",IT,mbtest,mbtest,Mike,Bender-Test,mbtest@Changeme!.pri,Puyallup,$False,$False
+"OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=Pri",IT,mbadmin,mbadmin,Mike,Bender-Admin,mbadmin@Changeme!.pri,Chicago,$False,$False
