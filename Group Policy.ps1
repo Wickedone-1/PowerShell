@@ -2,7 +2,7 @@
 
 #region 1
 #Share the c:\LabSetup\wallpaper folder with share name 'Wallpaper'
-New-SmbShare -Path c:\LabSetup\Wallpaper -Name Wallpaper -FullAccess 'cne270\domain users'
+New-SmbShare -Path c:\LabSetup\Wallpaper -Name Wallpaper -FullAccess 'Changeme!\domain users'  #Changes needed
 
 #Create the Wallpaper GPOs
 New-GPO 'GPO-BasicWallpaper'
@@ -49,7 +49,7 @@ Set-GPRegistryValue `
 New-Item -ItemType Directory C:\GPReports 
 
 #View all the GPOs in the Domain
-Get-GPO -All -Domain cne270.pri | ft DisplayName,GPOStatus,Description -AutoSize
+Get-GPO -All -Domain Changeme!.pri | ft DisplayName,GPOStatus,Description -AutoSize                #Changes needed
 
 #Review a Specific GPO
 Get-GPO -Name 'GPO-BasicWallpaper'
@@ -77,33 +77,33 @@ Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 #Link and Enable GPO-BeachWallpaper at Domain Level
 New-GPLink -Name 'GPO-BeachWallpaper' `
 	-LinkEnabled Yes `
-	-Target 'DC=cne270,dc=pri'
+	-Target 'DC=Changeme!,dc=pri'                                            #Changes needed
 Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
     
 #Enable GPO-RockWallpaper at MyCompany level
 New-GPLink -Name 'GPO-RockWallpaper' `
 	-LinkEnabled Yes `
-	-Target 'OU=MyCompany,DC=cne270,dc=pri'
+	-Target 'OU=MyCompany,DC=Changeme!,dc=pri'                                            #Changes needed
 Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 
 #Set Blocking of OUs at Users level and Enable GPO-SeaWallpaper at Users level
 Set-GPInheritance `
-	-Target 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,dc=pri' `
+	-Target 'OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,dc=pri'                                            #Changes needed
 	-IsBlocked Yes `
-	-Domain cne270.pri `
+	-Domain Changeme!.pri `                                                                   #Changes needed 
 	-Server DC1
 Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 
 New-GPLink -Name 'GPO-SeaWallpaper' `
 	-LinkEnabled Yes `
-	-Target 'OU=Users,OU=Puyallup,OU=MyCompany,DC=cne270,dc=pri'
+	-Target 'OU=Users,OU=Puyallup,OU=MyCompany,DC=Changeme!,dc=pri'                                            #Changes needed
 Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 
 #Set Enforcement
 Set-GPLink -Name 'GPO-RockWallpaper' `
 	-LinkEnabled Yes `
 	-Enforced Yes `
-	-Target 'OU=MyCompany,DC=cne270,dc=pri' 
+	-Target 'OU=MyCompany,DC=Changeme!,dc=pri'                                            #Changes needed 
 Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 
 #Change Permissions on GPO-RockWallpaper
@@ -134,7 +134,7 @@ Invoke-GPUpdate -Computer Client1 -Force -RandomDelayInMinutes 0
 #Running Resultant Set of Policies report on user logging on Client1
 Get-GPResultantSetOfPolicy `
 	-User cne270\ClarkA `
-	-Computer Client1.cne270.pri `
+	-Computer Client1.Changeme!.pri `                              #Changes needed
 	-ReportType Html `
 	-Path C:\GPReports\GPResult-ClarkA.html
 
