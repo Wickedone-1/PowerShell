@@ -1,4 +1,3 @@
-﻿#CNE 270
 #
 #Script for creating lab environment
 #
@@ -43,8 +42,8 @@
 	        -CreateDnsDelegation:$false `
 	        -DatabasePath "C:\Windows\NTDS" `
 	        -DomainMode "WinThreshold" `
-	        -DomainName "cne270.pri" `
-	        -DomainNetbiosName "cne270" `
+	        -DomainName "changeme!.pri" `        #Change DomainName to desired name
+	        -DomainNetbiosName "changeme!" `     #Change DomainNetbiosName to desired name
 	        -ForestMode "WinThreshold" `
 	        -InstallDns:$true `
 	        -LogPath "C:\Windows\NTDS" `
@@ -75,7 +74,7 @@
         #When the DHCP role is installed on a Domain Controller, then the server is automatically authorized. When it is installed 
         #on a member server, the authorization process must be performed
         #As this machine is a DC, the following step is not really necessary
-        Add-DhcpServerInDC -IPAddress 192.168.12.3 -DnsName dc1.cne270.pri
+        Add-DhcpServerInDC -IPAddress 192.168.12.3 -DnsName dc1.Changeme!.pri        #Change dc1.changeme!.pri to what you named your domain
     
     #Create Initial Scope for 192.168.12.0 subnet
         Add-DhcpServerv4Scope -Name 'Production Scope' `
@@ -89,13 +88,13 @@
     #DNS Server options for the scope
         set-DhcpServerv4OptionValue `
             -ScopeId 192.168.12.0 `
-            -ComputerName DC1.cne270.pri `
-            -DnsDomain cne270.pri `
+            -ComputerName DC1.Changeme!.pri `        #Changes needed
+            -DnsDomain changeme!.pri `               #changes needed
             -router 192.168.12.2 `
             -DnsServer 192.168.12.3
 
     #Create \\dc1\LabSetup share
-    New-SmbShare -Path c:\LabSetup -Name LabSetup -FullAccess 'cne270\domain users'
+    New-SmbShare -Path c:\LabSetup -Name LabSetup -FullAccess 'changeme!\domain users'   #changes needed
 
     #Add Printers
         Add-PrinterDriver -Name 'Dell 1130 Laser Printer' -ComputerName DC1 -Verbose
@@ -119,29 +118,29 @@
         #Add OUs
         New-ADOrganizationalUnit `
             -Name MyCompany `
-            -path "DC=cne270,DC=pri"
+            -path "DC=Changeme!,DC=pri"               #Changes needed
         New-ADOrganizationalUnit `
             -Name Seattle `
-            -Path "OU=MyCompany,DC=cne270,DC=pri"
+            -Path "OU=MyCompany,DC=Changeme!,DC=pri"               #Changes needed
         New-ADOrganizationalUnit `
             -Name Puyallup `
-            -path "OU=MyCompany,DC=cne270,DC=pri"
+            -path "OU=MyCompany,DC=Changeme!,DC=pri"               #Changes needed
         New-ADOrganizationalUnit `
             -name Computers `
-            -path "OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri"
+            -path "OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=pri"               #Changes needed
         New-ADOrganizationalUnit `
             -Name Users `
-            -Path "OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri"
+            -Path "OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=pri"               #Changes needed
         New-ADOrganizationalUnit `
             -Name Member-Servers `
-            -path "Ou=Computers,OU=Puyallup,OU=MyCompany,DC=cne270,DC=pri"
+            -path "Ou=Computers,OU=Puyallup,OU=MyCompany,DC=Changeme!,DC=pri"               #Changes needed
         #Add Users
         c:\LabSetup\CreateUsers.ps1
 #endregion
 
 #region Verify
     cls
-    Get-ADObject -SearchBase "OU=MyCompany,DC=cne270,DC=pri" -Filter * | Format-Table
+    Get-ADObject -SearchBase "OU=MyCompany,DC=Changeme!,DC=pri" -Filter * | Format-Table   #Changes needed
     get-printer | Format-Table
     get-smbshare -Name LabSetup 
     Get-DhcpServerv4Scope | Format-Table
